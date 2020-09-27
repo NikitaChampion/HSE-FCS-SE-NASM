@@ -41,9 +41,7 @@ formatin:  			db "%d", 0
 a: times 8 db 0						; 64-bits integer = 8 bytes
 b: times 8 db 0						; 64-bits integer = 8 bytes
 fmt4:	db "%s, a = %ld, b = %ld, c = %ld",10,0	; format string for printf
-	
-	section .bss 		; uninitialized space
-c:	resq	1		; reserve a 64-bit word
+c:	times 8 db 0		; reserve a 64-bit word
 
 	section .text
 _main:				; label
@@ -83,7 +81,7 @@ subb:					; c = a - b;
 	
 mulb:					; c = a * b;
 	mov	rax, [rel a]
-	imul	qword [rel b]	; signed integer multiply by b
+	imul qword [rel b]	; signed integer multiply by b
 	mov	[rel c], rax
 	pabc	"c = a * b"
 	
