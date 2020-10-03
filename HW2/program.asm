@@ -144,10 +144,9 @@ section .data
                 jl _UpdateMin                       ; a[i] < min
                 continueInput:                      ; метка возвращения
 
-                ; инкрементируем счетчик
                 mov rax, [rel i]
                 add rax, 1
-                mov [rel i], rax
+                mov [rel i], rax                    ; увеличили счётчик на 1
 
                 pop rcx
 
@@ -181,10 +180,9 @@ section .data
                 je _UpdateElement                   ; a[i] = 0
                 _ReturnChanging:                    ; метка возврата из обновления элемента
 
-                ; инкрементируем счетчик
                 mov rax, [rel i]
                 add rax, 1
-                mov [rel i], rax
+                mov [rel i], rax                    ; увеличили счётчик на 1
 
                 pop rcx
 
@@ -214,10 +212,9 @@ section .data
                 mov rsi, r10
                 call _printf                        ; вывод числа
 
-                ; инкрементируем счетчик
                 mov rax, [rel i]
                 add rax, 1
-                mov [rel i], rax
+                mov [rel i], rax                    ; увеличили счётчик на 1
 
                 pop rcx
 
