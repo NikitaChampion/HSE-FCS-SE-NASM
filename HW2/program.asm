@@ -136,14 +136,12 @@ section .data
                 mov r10, [rel number]               ; запишем введенное число в r10
                 mov [rel rax], r10                  ; записали введенное число в ячейку массива
 
-
                 ;mov rdi, formatInt
                 ;mov rsi, r10
                 ;call _printf
 
                 cmp r10d, [rel min]
                 jl _UpdateMin                       ; a[i] < min
-
                 continueInput:                      ; метка возвращения
 
                 ; инкрементируем счетчик
