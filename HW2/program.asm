@@ -65,8 +65,6 @@ section .data
         B: times 8 db 0          ; изменённый массив
         min: dd 2147483647       ; верхняя граница min
 
-        NULL dd 0
-
  section .text
         _main:
                 push    rbp
