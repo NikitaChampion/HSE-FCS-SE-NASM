@@ -4,39 +4,43 @@
 ; int main(int argc, char *argv[])
 ; {
 ;     int N, min = 2147483647;
-;     long int* arr;
-;     printf("Please, type size of an array:\n\r");
+;     long int* A, B;
+;     printf("Please, type size of array A:\n\r");
 ;     scanf("%d", &N);
 ;     if (N < 1) {
 ;         printf("Incorrect input. Please try again\n\r\n\r");
 ;         main(args, argv[]);
 ;     }
-;     arr = (int*)calloc (N, sizeof(int));
+;     A = (long int*)calloc (N, sizeof(long int));
+;     B = (long int*)calloc (N, sizeof(long int));
 ;     printf("Please, type your (int) array:\n\r");
 ;     for (int i = 0; i < N; ++i) {
-;         scanf("%d", arr + i);
-;         //printf("$d", *(arr + i));
-;         if (*(arr + i) < min) {
-;             min = *(arr + i);
+;         scanf("%d", A + i);
+;         //printf("$d", *(A + i));
+;         if (*(A + i) < min) {
+;             min = *(A + i);
 ;         }
 ;     }
 ;     printf("Min number is %d\n\r\n\r", min);
 ;     for (int i = 0; i < N; ++i) {
-;         if (*(arr + i) == 0) {
-;             *(arr + i) = min;
+;         *(B + i) = *(A + i);
+;         if (*(B + i) == 0) {
+;             *(B + i) = min;
 ;         }
 ;     }
 ;     printf("Your new array:\n\r");
 ;     for (int i = 0; i < N; ++i) {
-;         printf("$d", *(arr + i));
+;         printf("$d", *(B + i));
 ;     }
-;     free(arr);
+;     free(A);
+;     free(B);
 ;     return 0;
 ; }
 
 ; ВАРИАНТ 15
 
 ; nasm -fmacho64 -o a.o ПУТЬ_ДО_ФАЙЛА && gcc a.o && ./a.out
+; nasm -fmacho64 -o a.o /Users/nikitaigumnov/Documents/GitHub/HSE-FCS-SE-NASM/HW2/program.asm && gcc a.o && ./a.out
         global    _main
         extern    _scanf
         extern    _printf
@@ -47,7 +51,7 @@ section .data
 
         formatInt db '%d', 0
         formatIntWithSpace db '%d ', 0
-        typeSize db 'Please, type size of an array: ', 10, 13, 0
+        typeSize db 'Please, type size of array A: ', 10, 13, 0
         typeArr db 'Please, type your (int) array: ', 10, 13, 0
         typeMin db 10, 13, 'Min number is %d', 10, 13, 10, 13, 0
         yourArr db 'Your new array:', 10, 13, 0
@@ -55,9 +59,10 @@ section .data
         newLine db 10, 13, 0
 
         N: times 4 db 0          ; размер массива (32-bits integer = 4 bytes)
-        number: times 8 db 0     ; введенное число
+        number: times 8 db 0     ; введённое число
         i: times 8 db 0          ; счётчик в цикле
-        arr: times 8 db 0        ; массив
+        A: times 8 db 0          ; массив
+        B: times 8 db 0          ; изменённый массив
         min: dd 2147483647       ; верхняя граница min
 
         NULL dd 0
@@ -79,8 +84,12 @@ section .data
                 mov rdi, N
                 mov rsi, 8
                 call _calloc                        ; ищем участок памяти на N чисел
-                mov [rel arr], rax                  ; массив на N int
+                mov [rel A], rax                    ; массив на N int
 
+                mov rdi, N
+                mov rsi, 8
+                call _calloc                        ; выделение памяти на массив B
+                mov [rel B], rax
 
                 mov rdi, typeArr
                 call _printf                        ; просим ввести массив
@@ -105,7 +114,10 @@ section .data
                 mov rdi, newLine
                 call _printf
 
-                mov rdi, [rel arr]
+                mov rdi, [rel A]
+                call _free
+
+                mov rdi, [rel B]
                 call _free
 
                 jmp ExitProgram
@@ -116,46 +128,80 @@ section .data
 
                 mov rdi, formatInt
                 mov rsi, number
-                call _scanf                        ; считывание элемента массива
+                call _scanf                         ; считывание элемента массива
 
                 mov r10, [rel i]
-                imul r10, qword 8                  ; вычисляем сдвиг указателя
+                imul r10, qword 8                   ; вычисляем сдвиг указателя
 
-                mov rax, [rel arr]
-                add rax, r10                       ; смещаем указатель на только что посчитанный сдвиг
-                mov r10, [rel number]              ; запишем введенное число в r10
-                mov [rel rax], r10                 ; записали введенное число в ячейку массива
+                mov rax, [rel A]
+                add rax, r10                        ; смещаем указатель на только что посчитанный сдвиг
+                mov r10, [rel number]               ; запишем введенное число в r10
+                mov [rel rax], r10                  ; записали введенное число в ячейку массива
 
-                
+
                 ;mov rdi, formatInt
                 ;mov rsi, r10
                 ;call _printf
 
                 cmp r10d, [rel min]
-                jl _UpdateMin                      ; a[i] < min
+                jl _UpdateMin                       ; a[i] < min
 
-                continueInput:                     ; метка возвращения
+                continueInput:                      ; метка возвращения
 
                 ; инкрементируем счетчик
                 mov rax, [rel i]
                 add rax, 1
                 mov [rel i], rax
 
+                pop rcx
+
                 mov eax, [rel i]
                 cmp eax, [rel N]
-                jl _Looper                         ; i < N
+                jl InputArray                       ; i < N
 
-                pop rcx
                 ret
 
-        _Looper:
-                pop rcx
-                jmp InputArray
-
-
-        _UpdateMin:                                ; Функция, обновляющая минимум
+        _UpdateMin:                                 ; Функция, обновляющая минимум
                 mov [rel min], r10
                 jmp continueInput
+
+
+        ChangeNullElements:
+                push rcx
+
+                mov r10, [rel i]
+                imul r10, qword 8
+
+                mov rax, [rel A]
+                add rax, r10
+                
+                mov r11, [rel rax]                  ; получаем значение элемента в массиве
+
+                mov rax, [rel B]
+                add rax, r10
+                mov [rel rax], r11                  ; обновляем i-ый элемент B
+
+                cmp r11, 0
+                je _UpdateElement                   ; a[i] = 0
+                _ReturnChanging:                    ; метка возврата из обновления элемента
+
+                ; инкрементируем счетчик
+                mov rax, [rel i]
+                add rax, 1
+                mov [rel i], rax
+
+                pop rcx
+
+                mov eax, [rel i]
+                cmp eax, [rel N]
+                jl ChangeNullElements               ; i < N
+
+                ret
+
+        _UpdateElement:
+                mov r11, [rel min]
+                mov [rel rax], r11
+                jmp _ReturnChanging
 
 
         OutputArray:
@@ -164,64 +210,27 @@ section .data
                 mov r10, [rel i]
                 imul r10, qword 8
 
-                mov rax, [rel arr]
+                mov rax, [rel B]
                 add rax, r10
-                mov r10, [rel rax]                ; получаем значение элемента в массиве
+                mov r10, [rel rax]                  ; получаем значение элемента в массиве
 
                 mov rdi, formatIntWithSpace
                 mov rsi, r10
-                call _printf                      ; вывод числа
+                call _printf                        ; вывод числа
 
                 ; инкрементируем счетчик
                 mov rax, [rel i]
                 add rax, 1
                 mov [rel i], rax
-                
+
+                pop rcx
+
                 mov eax, [rel i]
                 cmp eax, [rel N]
-                jl _Looper3                       ; i < N
+                jl OutputArray                      ; i < N
 
-                pop rcx
                 ret
 
-        _Looper3:
-                pop rcx
-                jmp OutputArray
-
-        ChangeNullElements:
-                push rcx
-
-                mov r10, [rel i]
-                imul r10, qword 8
-
-                mov rax, [rel arr]
-                add rax, r10
-                mov r10, [rel rax]                ; получаем значение элемента в массиве
-
-                cmp r10, 0
-                je _UpdateElement                 ; a[i] = 0
-                _ReturnChanging:                  ; метка возврата из обновления элемента
-
-                ; инкрементируем счетчик
-                mov rax, [rel i]
-                add rax, 1
-                mov [rel i], rax
-                
-                mov eax, [rel i]
-                cmp eax, [rel N]
-                jl _Looper2                       ; i < N
-
-                pop rcx
-                ret
-
-        _Looper2:
-                pop rcx
-                jmp ChangeNullElements
-
-        _UpdateElement:
-                mov r10, [rel min]
-                mov [rel rax], r10
-                jmp _ReturnChanging
 
         WrongInput:
                 mov rdi, wrongInput
@@ -232,7 +241,7 @@ section .data
 
         ExitProgram:
                 pop rbp
-                mov rax, 0		          ; normal, no error, return value
+                mov rax, 0		            ; normal, no error, return value
 	        ret
 
 
