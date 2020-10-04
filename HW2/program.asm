@@ -16,21 +16,25 @@
 ;     printf("Please, type your (int) array:\n\r");
 ;     for (int i = 0; i < N; ++i) {
 ;         scanf("%d", A + i);
-;         //printf("$d", *(A + i));
+;         //printf("$d ", *(A + i));
 ;         if (*(A + i) < min) {
 ;             min = *(A + i);
 ;         }
 ;     }
 ;     printf("Min number is %d\n\r\n\r", min);
+;     printf("Your array:\n\r");
+;     for (int i = 0; i < N; ++i) {
+;         printf("$d ", *(A + i));
+;     }
 ;     for (int i = 0; i < N; ++i) {
 ;         *(B + i) = *(A + i);
 ;         if (*(B + i) == 0) {
 ;             *(B + i) = min;
 ;         }
 ;     }
-;     printf("Your new array:\n\r");
+;     printf("\n\r\n\rYour new array:\n\r");
 ;     for (int i = 0; i < N; ++i) {
-;         printf("$d", *(B + i));
+;         printf("$d ", *(B + i));
 ;     }
 ;     free(A);
 ;     free(B);
@@ -55,7 +59,7 @@ section .data
         typeArr db 'Please, type your (int) array: ', 10, 13, 0
         typeMin db 10, 13, 'Min number is %d', 10, 13, 10, 13, 0
         yourArr db 'Your array:', 10, 13, 0
-        newArr db 'Your new array:', 10, 13, 0
+        newArr db 10, 13, 10, 13, 'Your new array:', 10, 13, 0
         wrongInput db 'Incorrect input. Please try again', 10, 13, 10, 13, 0
         newLine db 10, 13, 0
 
@@ -109,11 +113,6 @@ section .data
                 mov rax, 0
                 mov [rel i], rax                    ; обнуляем счётчик цикла
                 call ChangeNullElements             ; меняем нулевые элементы
-
-                mov rdi, newLine
-                call _printf
-                mov rdi, newLine
-                call _printf
 
                 mov rdi, newArr
                 call _printf
