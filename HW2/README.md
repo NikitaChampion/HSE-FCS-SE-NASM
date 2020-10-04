@@ -43,10 +43,10 @@
 <img src="https://github.com/NikitaChampion/HSE-FCS-SE-NASM/blob/master/HW2/pictures/test6.png" alt="" width="700" /> <br>
 Программа отработала успешно <br><br>
 - **Тест 7**<br>
-Введём случайный большой (N = 100) массив из отрицательных, нулевых и положительных элементов::<br>
+Введём случайный большой (N = 100) массив из отрицательных, нулевых и положительных элементов (в [-1000, 1000]) (для генерации теста использовалась [эта](https://github.com/NikitaChampion/HSE-FCS-SE-NASM/tree/master/HW2/tests/testGenerator.cpp) программа; полный тест смотрите [здесь](https://github.com/NikitaChampion/HSE-FCS-SE-NASM/tree/master/HW2/tests/test_7.txt)):<br>
 <img src="https://github.com/NikitaChampion/HSE-FCS-SE-NASM/blob/master/HW2/pictures/test7.png" alt="" width="700" /> <br>
 Программа отработала успешно <br><br>
 - **Тест 8**<br>
-Введём случайный большой (N = 200) массив из отрицательных, нулевых и положительных элементов:<br>
+Введём случайный большой (N = 200) массив из отрицательных, нулевых и положительных элементов (для генерации теста использовалась [эта](https://github.com/NikitaChampion/HSE-FCS-SE-NASM/tree/master/HW2/tests/testGenerator.cpp) программа):<br>
 <img src="https://github.com/NikitaChampion/HSE-FCS-SE-NASM/blob/master/HW2/pictures/test8.png" alt="" width="700" /> <br>
 Программа отработала успешно <br><br>
