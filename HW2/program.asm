@@ -16,7 +16,7 @@
 ;     printf("Please, type your (int) array:\n\r");
 ;     for (int i = 0; i < N; ++i) {
 ;         scanf("%d", A + i);
-;         //printf("$d ", *(A + i));
+;         //printf("$d", *(A + i));
 ;         if (*(A + i) < min) {
 ;             min = *(A + i);
 ;         }
