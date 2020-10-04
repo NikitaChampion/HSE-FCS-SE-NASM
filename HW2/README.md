@@ -16,7 +16,7 @@
 5. Вызываем процедуру вывода изменённого массива B. <br>
 
 ## Тестирование программы
-Тесты лежат в папке [tests](https://github.com/NikitaChampion/HSE-FCS-SE-NASM/tree/master/HW2/tests) (в папке элементы массива указываются через пробел для лучшей читаемости ввода).<br>
+Тесты лежат в папке [tests](https://github.com/NikitaChampion/HSE-FCS-SE-NASM/tree/master/HW2/tests) (в папке элементы массива указываются через пробел для лучшей читаемости ввода). Этот [файл](https://github.com/NikitaChampion/HSE-FCS-SE-NASM/tree/master/HW2/tests/convertToRealTest.py) конвертирует тест из папки в реальный тест (который можно скопировать и вставить).<br>
 
 - **Тест 1**<br>
 Для начала проверим ввод размера массива на отрицательные числа и ноль:<br>
