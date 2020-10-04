@@ -54,7 +54,8 @@ section .data
         typeSize db 'Please, type size of array A: ', 10, 13, 0
         typeArr db 'Please, type your (int) array: ', 10, 13, 0
         typeMin db 10, 13, 'Min number is %d', 10, 13, 10, 13, 0
-        yourArr db 'Your new array:', 10, 13, 0
+        yourArr db 'Your array:', 10, 13, 0
+        newArr db 'Your new array:', 10, 13, 0
         wrongInput db 'Incorrect input. Please try again', 10, 13, 10, 13, 0
         newLine db 10, 13, 0
 
@@ -95,19 +96,31 @@ section .data
                 call InputArray                     ; процедура ввода массива
 
                 mov rdi, typeMin
-                mov rsi, [rel min]                  ; Вывод минимума в массиве
+                mov rsi, [rel min]                  ; вывод минимума в массиве
                 call _printf
-
-                mov rax, 0
-                mov [rel i], rax                    ; обнуляем счётчик цикла
-                call ChangeNullElements             ; меняем нулевые элементы
 
                 mov rdi, yourArr
                 call _printf
 
                 mov rax, 0
                 mov [rel i], rax                    ; обнуляем счётчик цикла
-                call OutputArray                    ; выводим весь массив
+                call OutputArray_A                  ; выводим весь массив A
+
+                mov rax, 0
+                mov [rel i], rax                    ; обнуляем счётчик цикла
+                call ChangeNullElements             ; меняем нулевые элементы
+
+                mov rdi, newLine
+                call _printf
+                mov rdi, newLine
+                call _printf
+
+                mov rdi, newArr
+                call _printf
+
+                mov rax, 0
+                mov [rel i], rax                    ; обнуляем счётчик цикла
+                call OutputArray_B                  ; выводим весь массив B
 
                 mov rdi, newLine
                 call _printf
@@ -198,7 +211,33 @@ section .data
                 jmp _ReturnChanging
 
 
-        OutputArray:
+        OutputArray_A:
+                push rcx
+
+                mov r10, [rel i]
+                imul r10, qword 8
+
+                mov rax, [rel A]
+                add rax, r10
+                mov r10, [rel rax]                  ; получаем значение элемента в массиве
+
+                mov rdi, formatIntWithSpace
+                mov rsi, r10
+                call _printf                        ; вывод числа
+
+                mov rax, [rel i]
+                add rax, 1
+                mov [rel i], rax                    ; увеличили счётчик на 1
+
+                pop rcx
+
+                mov eax, [rel i]
+                cmp eax, [rel N]
+                jl OutputArray_A                    ; i < N
+
+                ret
+
+        OutputArray_B:
                 push rcx
 
                 mov r10, [rel i]
@@ -220,7 +259,7 @@ section .data
 
                 mov eax, [rel i]
                 cmp eax, [rel N]
-                jl OutputArray                      ; i < N
+                jl OutputArray_B                    ; i < N
 
                 ret
 
