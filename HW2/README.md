@@ -16,7 +16,8 @@
 5. Вызываем процедуру вывода изменённого массива B. <br>
 
 ## Тестирование программы
-Тесты лежат в папке [tests](https://github.com/NikitaChampion/HSE-FCS-SE-NASM/tree/master/HW2/tests)<br>.
+Тесты лежат в папке [tests](https://github.com/NikitaChampion/HSE-FCS-SE-NASM/tree/master/HW2/tests).<br>
+
 - **Тест 1**<br>
 Для начала проверим ввод размера массива на отрицательные числа и ноль:<br>
 <img src="https://github.com/NikitaChampion/HSE-FCS-SE-NASM/blob/master/HW2/pictures/test1.png" alt="" width="700" /> <br>
