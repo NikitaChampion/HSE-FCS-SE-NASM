@@ -13,38 +13,39 @@
 2. Вызываем процедуру ввода массива. <br>
 3. Вызываем процедуру вывода исходного массива A. <br>
 4. Изменяем исходный массив A по заданию, получая массив B. <br>
-5. Вызываем процедуру вывода изменённого массива. <br>
+5. Вызываем процедуру вывода изменённого массива B. <br>
 
 ## Тестирование программы
+Тесты лежат в папке [tests](https://github.com/NikitaChampion/HSE-FCS-SE-NASM/tree/master/HW2/tests)<br>
 - **Тест 1**<br>
 Для начала проверим ввод размера массива на отрицательные числа и ноль:<br>
-<img src="https://github.com/NikitaChampion/HSE-FCS-SE-NASM/blob/master/HW2/pictures/Test1.png" alt="" width="700" /> <br>
+<img src="https://github.com/NikitaChampion/HSE-FCS-SE-NASM/blob/master/HW2/pictures/test1.png" alt="" width="700" /> <br>
 Программа отработала успешно <br><br>
 - **Тест 2**<br>
-Введём массив массив, состоящий из одних 0:<br>
-<img src="https://github.com/NikitaChampion/HSE-FCS-SE-NASM/blob/master/HW2/pictures/Test2.png" alt="" width="700" /> <br>
-Программа отработала успешно (также значит, что корректно обрабатываются отрицательные числа) <br><br>
+Введём массив, состоящий из одних 0:<br>
+<img src="https://github.com/NikitaChampion/HSE-FCS-SE-NASM/blob/master/HW2/pictures/test2.png" alt="" width="700" /> <br>
+Программа отработала успешно <br><br>
 - **Тест 3**<br>
 Введём массив из положительных элементов:<br>
-<img src="https://github.com/NikitaChampion/HSE-FCS-SE-NASM/blob/master/HW2/pictures/Test3.png" alt="" width="700" /> <br>
+<img src="https://github.com/NikitaChampion/HSE-FCS-SE-NASM/blob/master/HW2/pictures/test3.png" alt="" width="700" /> <br>
 Программа отработала успешно <br><br>
 - **Тест 4**<br>
 Введём массив из нулевых и положительных элементов:<br>
-<img src="https://github.com/NikitaChampion/HSE-FCS-SE-NASM/blob/master/HW2/pictures/Test4.png" alt="" width="700" /> <br>
+<img src="https://github.com/NikitaChampion/HSE-FCS-SE-NASM/blob/master/HW2/pictures/test4.png" alt="" width="700" /> <br>
 Программа отработала успешно <br><br>
 - **Тест 5**<br>
 Введём массив из отрицательных и положительных элементов:<br>
-<img src="https://github.com/NikitaChampion/HSE-FCS-SE-NASM/blob/master/HW2/pictures/Test5.png" alt="" width="700" /> <br>
+<img src="https://github.com/NikitaChampion/HSE-FCS-SE-NASM/blob/master/HW2/pictures/test5.png" alt="" width="700" /> <br>
 Программа отработала успешно <br><br>
 - **Тест 6**<br>
-Введём массив из отрицательных, нулевых и положительных элементов:<br>
-<img src="https://github.com/NikitaChampion/HSE-FCS-SE-NASM/blob/master/HW2/pictures/Test6.png" alt="" width="700" /> <br>
+Введём массив из отрицательных и нулевых элементов:<br>
+<img src="https://github.com/NikitaChampion/HSE-FCS-SE-NASM/blob/master/HW2/pictures/test6.png" alt="" width="700" /> <br>
 Программа отработала успешно <br><br>
 - **Тест 7**<br>
-Введём случайный большой (N = 100) массив из отрицательных и нулевых элементов:<br>
-<img src="https://github.com/NikitaChampion/HSE-FCS-SE-NASM/blob/master/HW2/pictures/Test7.png" alt="" width="700" /> <br>
+Введём случайный большой (N = 100) массив из отрицательных, нулевых и положительных элементов::<br>
+<img src="https://github.com/NikitaChampion/HSE-FCS-SE-NASM/blob/master/HW2/pictures/test7.png" alt="" width="700" /> <br>
 Программа отработала успешно <br><br>
 - **Тест 8**<br>
 Введём случайный большой (N = 200) массив из отрицательных, нулевых и положительных элементов:<br>
-<img src="https://github.com/NikitaChampion/HSE-FCS-SE-NASM/blob/master/HW2/pictures/Test8.png" alt="" width="700" /> <br>
+<img src="https://github.com/NikitaChampion/HSE-FCS-SE-NASM/blob/master/HW2/pictures/test8.png" alt="" width="700" /> <br>
 Программа отработала успешно <br><br>
