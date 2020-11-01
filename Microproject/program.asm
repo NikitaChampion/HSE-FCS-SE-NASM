@@ -55,7 +55,7 @@ section .data
                 jb WrongInput                       ; когда N < 1 (N = 0)
 
                 mov ecx, 2
-                call ComputeAnswerLoop              ; вычисляем ответ
+                call ComputeAnswer                  ; вычисляем ответ
 
                 mov rdi, printAnswer
                 mov rsi, [rel n]
@@ -64,7 +64,7 @@ section .data
                 jmp ExitProgram
 
         ; == ПРОЦЕДУРЫ ==
-        ComputeAnswerLoop:
+        ComputeAnswer:
                 mov eax, [rel n]
                 inc eax
                 mov [rel n], eax                    ; ++n
@@ -80,19 +80,18 @@ section .data
                 mov edx, 0
                 div dword [rel n]
                 cmp eax, [rel prev]
-                jne ComputeAnswer                   ; prev != next / n
+                jne FinishLoop                      ; prev != next / n
 
                 mov eax, [rel next]
                 cmp eax, [rel N]
-                ja ComputeAnswer                    ; next > N
+                ja FinishLoop                       ; next > N
 
                 inc ecx                             ; бесконечный цикл (чтобы можно было выйти, используя "break")
-                loop ComputeAnswerLoop              ; повторный вызов цикла
-
-        ComputeAnswer:
-                mov eax, [rel n]
-                dec eax
-                mov [rel n], eax                    ; --n
+                loop ComputeAnswer                  ; повторный вызов цикла
+                FinishLoop:
+                        mov eax, [rel n]
+                        dec eax
+                        mov [rel n], eax            ; --n
 
                 ret
 
